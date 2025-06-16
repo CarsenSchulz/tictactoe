@@ -32,7 +32,7 @@ def enter_move(board):
                     print("That space has already been picked - choose a different space")
             else:
                 print("You must choose a space between 1 and 9")
-        except:
+        except ValueError:
             print("Please enter a number.")
 
 
@@ -51,8 +51,6 @@ def victory_for(board, sign):
     # The function analyzes the board's status in order to check if 
     # the player using 'O's or 'X's has won the game
 
-    if sum(row.count(sign) for row in board) < 3:
-        return
     for row in board:
         if all(cell == sign for cell in row):
             return sign
@@ -66,13 +64,13 @@ def victory_for(board, sign):
     if all(board[i][2 - i] == sign for i in range(3)):
         return sign
     
-    return
+    return None
 
 def draw_move(board):
     # The function draws the computer's move and updates the board.
     free_fields = make_list_of_free_fields(board)
     while True:
-        computer_move = randrange(8) + 1
+        computer_move = randrange(9) + 1
         (row,col)  = convert_space_to_row_col(computer_move)
         if (row,col) in free_fields:
             board[row][col] = "X"
